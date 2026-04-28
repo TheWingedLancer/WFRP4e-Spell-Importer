@@ -1,0 +1,154 @@
+<div class="spell-importer-body">
+
+  {{!-- Tabs --}}
+  <nav class="spell-importer-tabs" aria-label="Import source">
+    {{#each tabs as |tab|}}
+      <button type="button"
+              class="tab-btn {{#if (eq tab ../activeTab)}}active{{/if}}"
+              data-action="switchTab"
+              data-tab="{{tab}}">
+        {{#if (eq tab "files")}}<i class="fas fa-file"></i> {{localize "SPELL_IMPORTER.Tabs.Files"}}{{/if}}
+        {{#if (eq tab "folder")}}<i class="fas fa-folder-open"></i> {{localize "SPELL_IMPORTER.Tabs.Folder"}}{{/if}}
+        {{#if (eq tab "paste")}}<i class="fas fa-paste"></i> {{localize "SPELL_IMPORTER.Tabs.Paste"}}{{/if}}
+      </button>
+    {{/each}}
+  </nav>
+
+  {{!-- Tab panels --}}
+  <section class="spell-importer-input">
+
+    {{#if (eq activeTab "files")}}
+      <div class="panel">
+        <label class="panel-label" for="spell-importer-files">{{localize "SPELL_IMPORTER.Files.Pick"}}</label>
+        <input id="spell-importer-files" type="file" name="files" accept="application/json,.json" multiple>
+        <p class="hint">{{localize "SPELL_IMPORTER.Files.PickHint"}}</p>
+        <div class="panel-actions">
+          <button type="button" data-action="parseFiles">
+            <i class="fas fa-cogs"></i> {{localize "SPELL_IMPORTER.Buttons.Parse"}}
+          </button>
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if (eq activeTab "folder")}}
+      <div class="panel">
+        <label class="panel-label" for="spell-importer-folder">{{localize "SPELL_IMPORTER.Folder.Path"}}</label>
+        <div class="folder-row">
+          <input id="spell-importer-folder" type="text" name="folderPath" placeholder="modules/my-spells/data">
+          <button type="button" data-action="browseFolder">
+            <i class="fas fa-folder-open"></i> {{localize "SPELL_IMPORTER.Folder.Browse"}}
+          </button>
+        </div>
+        <p class="hint">{{localize "SPELL_IMPORTER.Folder.PathHint"}}</p>
+        <div class="panel-actions">
+          <button type="button" data-action="scanFolder">
+            <i class="fas fa-search"></i> {{localize "SPELL_IMPORTER.Folder.Scan"}}
+          </button>
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if (eq activeTab "paste")}}
+      <div class="panel">
+        <label class="panel-label" for="spell-importer-paste">{{localize "SPELL_IMPORTER.Paste.Hint"}}</label>
+        <textarea id="spell-importer-paste"
+                  name="pasted"
+                  rows="10"
+                  spellcheck="false"
+                  placeholder='{{localize "SPELL_IMPORTER.Paste.Placeholder"}}'></textarea>
+        <div class="panel-actions">
+          <button type="button" data-action="parsePaste">
+            <i class="fas fa-cogs"></i> {{localize "SPELL_IMPORTER.Buttons.Parse"}}
+          </button>
+        </div>
+      </div>
+    {{/if}}
+
+  </section>
+
+  {{!-- Preview --}}
+  {{#if hasParsed}}
+    <section class="spell-importer-preview">
+      <header class="preview-header">
+        <h3>{{localize "SPELL_IMPORTER.Preview.Heading" count=spells.length}}</h3>
+        <button type="button" class="clear-btn" data-action="clear">
+          <i class="fas fa-times"></i> {{localize "SPELL_IMPORTER.Buttons.Clear"}}
+        </button>
+      </header>
+
+      {{#if spells.length}}
+        <div class="preview-table-wrap">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnName"}}</th>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnLore"}}</th>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnCN"}}</th>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnRange"}}</th>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnTarget"}}</th>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnDuration"}}</th>
+                <th>{{localize "SPELL_IMPORTER.Preview.ColumnDamage"}}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each spells as |s|}}
+                <tr class="{{#if s.duplicate}}is-duplicate{{/if}}">
+                  <td class="name-cell">
+                    {{#if s.img}}<img src="{{s.img}}" class="spell-icon" alt="">{{/if}}
+                    <span>{{s.name}}</span>
+                  </td>
+                  <td>{{s.system.lore.value}}</td>
+                  <td>{{s.system.cn.value}}</td>
+                  <td>{{s.system.range.value}}</td>
+                  <td>{{s.system.target.value}}</td>
+                  <td>{{s.system.duration.value}}</td>
+                  <td>{{s.system.damage.value}}</td>
+                  <td>
+                    {{#if s.duplicate}}
+                      <span class="badge badge-dup">{{localize "SPELL_IMPORTER.Preview.DuplicateExisting"}}</span>
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{/if}}
+
+      {{#if skipped.length}}
+        <details class="skipped-block">
+          <summary>{{localize "SPELL_IMPORTER.Preview.Skipped" count=skipped.length}}</summary>
+          <ul>
+            {{#each skipped as |s|}}
+              <li><strong>{{s.name}}</strong> — {{s.reason}}</li>
+            {{/each}}
+          </ul>
+        </details>
+      {{/if}}
+
+      {{#if spells.length}}
+        <div class="commit-row">
+          <label for="onDuplicate">{{localize "SPELL_IMPORTER.Options.OnDuplicate"}}</label>
+          <select name="onDuplicate" id="onDuplicate">
+            {{#each duplicateOptions as |opt|}}
+              <option value="{{opt.value}}" {{#if (eq opt.value ../onDuplicate)}}selected{{/if}}>
+                {{localize opt.label}}
+              </option>
+            {{/each}}
+          </select>
+
+          <div class="commit-actions">
+            <button type="button" data-action="cancel">
+              {{localize "SPELL_IMPORTER.Buttons.Cancel"}}
+            </button>
+            <button type="submit" class="primary">
+              <i class="fas fa-file-import"></i> {{localize "SPELL_IMPORTER.Buttons.Import"}}
+            </button>
+          </div>
+        </div>
+      {{/if}}
+    </section>
+  {{/if}}
+
+</div>

@@ -1,0 +1,62 @@
+{
+  "SPELL_IMPORTER": {
+    "Title": "WFRP4e Spell Importer",
+    "OpenButton": "Import Spells",
+    "Tabs": {
+      "Files": "Pick Files",
+      "Folder": "Scan Folder",
+      "Paste": "Paste JSON"
+    },
+    "Files": {
+      "Pick": "Select one or more spell .json files",
+      "PickHint": "Hold Ctrl (Windows) or Cmd (macOS) to select multiple files.",
+      "Selected": "{count} file(s) selected"
+    },
+    "Folder": {
+      "Path": "Folder path",
+      "PathHint": "Foundry Data path, e.g. modules/my-spells/data — every .json found will be parsed.",
+      "Browse": "Browse",
+      "Scan": "Scan"
+    },
+    "Paste": {
+      "Hint": "Paste a single spell JSON object, or a JSON array of spell objects.",
+      "Placeholder": "[\n  { \"name\": \"Dart\", \"type\": \"spell\", \"system\": { ... } },\n  { \"name\": \"Glowing Light\", \"type\": \"spell\", \"system\": { ... } }\n]"
+    },
+    "Preview": {
+      "Heading": "Found {count} spell(s) ready to import",
+      "ColumnName": "Name",
+      "ColumnLore": "Lore",
+      "ColumnCN": "CN",
+      "ColumnRange": "Range",
+      "ColumnTarget": "Target",
+      "ColumnDuration": "Duration",
+      "ColumnDamage": "Damage",
+      "Skipped": "Skipped {count} entries that did not look like spells",
+      "DuplicateExisting": "Already in pack",
+      "DuplicateOverwrite": "Will overwrite",
+      "DuplicateSkip": "Will skip"
+    },
+    "Options": {
+      "OnDuplicate": "If a spell with the same name already exists",
+      "OnDuplicateSkip": "Skip",
+      "OnDuplicateOverwrite": "Overwrite",
+      "OnDuplicateRename": "Import as new (append number)"
+    },
+    "Buttons": {
+      "Parse": "Parse",
+      "Import": "Import",
+      "Cancel": "Cancel",
+      "Clear": "Clear"
+    },
+    "Notifications": {
+      "NoFiles": "No files selected.",
+      "NoText": "Paste some JSON first.",
+      "BadJSON": "Could not parse JSON: {error}",
+      "BadFile": "Could not read {file}: {error}",
+      "NotASpell": "{name} is not a spell (type was \"{type}\") — skipped.",
+      "Success": "Imported {created} new spell(s), updated {updated}, skipped {skipped}.",
+      "PackMissing": "Compendium pack not found. Make sure the module is enabled.",
+      "PermissionDenied": "Only the GM can import into the compendium."
+    }
+  }
+}

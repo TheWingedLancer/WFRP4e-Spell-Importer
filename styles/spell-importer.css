@@ -1,0 +1,244 @@
+/* ----------------------------------------------------------------- */
+/*  WFRP4e Spell Importer styles                                     */
+/*  Designed to sit naturally inside Foundry's V13 ApplicationV2     */
+/*  chrome — restrained, functional, with WFRP-flavoured accents.    */
+/* ----------------------------------------------------------------- */
+
+.wfrp4e-spell-importer .spell-importer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 0.5rem;
+}
+
+/* ---- Tabs ---- */
+.wfrp4e-spell-importer .spell-importer-tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--color-border-light-tertiary, #555);
+  padding-bottom: 0.25rem;
+}
+
+.wfrp4e-spell-importer .tab-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid transparent;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  font-family: var(--font-primary, "Signika", sans-serif);
+  font-size: 0.95em;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.wfrp4e-spell-importer .tab-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.wfrp4e-spell-importer .tab-btn.active {
+  background: var(--color-bg, rgba(0, 0, 0, 0.15));
+  border-color: var(--color-border-light-tertiary, #555);
+  border-bottom-color: transparent;
+  font-weight: 600;
+}
+
+/* ---- Input panels ---- */
+.wfrp4e-spell-importer .spell-importer-input .panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+}
+
+.wfrp4e-spell-importer .panel-label {
+  font-weight: 600;
+}
+
+.wfrp4e-spell-importer .hint {
+  font-size: 0.85em;
+  opacity: 0.75;
+  margin: 0;
+}
+
+.wfrp4e-spell-importer input[type="file"],
+.wfrp4e-spell-importer input[type="text"],
+.wfrp4e-spell-importer textarea,
+.wfrp4e-spell-importer select {
+  width: 100%;
+  font-family: inherit;
+}
+
+.wfrp4e-spell-importer textarea {
+  resize: vertical;
+  min-height: 8em;
+  font-family: var(--font-mono, "Source Code Pro", monospace);
+  font-size: 0.85em;
+}
+
+.wfrp4e-spell-importer .folder-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.wfrp4e-spell-importer .folder-row input[type="text"] {
+  flex: 1;
+}
+
+.wfrp4e-spell-importer .panel-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---- Preview ---- */
+.wfrp4e-spell-importer .spell-importer-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.wfrp4e-spell-importer .preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wfrp4e-spell-importer .preview-header h3 {
+  margin: 0;
+  font-size: 1.05em;
+}
+
+.wfrp4e-spell-importer .clear-btn {
+  background: transparent;
+  border: 1px solid var(--color-border-light-tertiary, #555);
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.85em;
+  border-radius: 3px;
+}
+
+.wfrp4e-spell-importer .preview-table-wrap {
+  overflow: auto;
+  max-height: 280px;
+  border: 1px solid var(--color-border-light-tertiary, #555);
+  border-radius: 4px;
+}
+
+.wfrp4e-spell-importer .preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88em;
+}
+
+.wfrp4e-spell-importer .preview-table th,
+.wfrp4e-spell-importer .preview-table td {
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  vertical-align: middle;
+}
+
+.wfrp4e-spell-importer .preview-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg, #f0e8d8);
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border-light-tertiary, #555);
+}
+
+.wfrp4e-spell-importer .preview-table tr.is-duplicate {
+  background: rgba(180, 90, 30, 0.08);
+}
+
+.wfrp4e-spell-importer .name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wfrp4e-spell-importer .spell-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  flex: 0 0 auto;
+}
+
+.wfrp4e-spell-importer .badge {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border-radius: 999px;
+  font-size: 0.75em;
+  font-weight: 600;
+  background: rgba(180, 90, 30, 0.18);
+  color: #6b3010;
+  border: 1px solid rgba(180, 90, 30, 0.4);
+}
+
+/* ---- Skipped block ---- */
+.wfrp4e-spell-importer .skipped-block {
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0.4rem 0.6rem;
+  border-radius: 3px;
+}
+
+.wfrp4e-spell-importer .skipped-block ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+/* ---- Commit row ---- */
+.wfrp4e-spell-importer .commit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border-light-tertiary, #555);
+}
+
+.wfrp4e-spell-importer .commit-row label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wfrp4e-spell-importer .commit-row select {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 12em;
+}
+
+.wfrp4e-spell-importer .commit-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wfrp4e-spell-importer button.primary {
+  background: linear-gradient(180deg, #6b1f12, #4a1408);
+  color: #f5e9c8;
+  border: 1px solid #2a0a04;
+  font-weight: 600;
+}
+
+.wfrp4e-spell-importer button.primary:hover {
+  background: linear-gradient(180deg, #7d281a, #571810);
+}
+
+/* ---- Compendium directory header button ---- */
+button.wfrp4e-spell-importer-open {
+  margin-top: 0.4rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 3px;
+  cursor: pointer;
+}

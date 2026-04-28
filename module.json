@@ -1,0 +1,59 @@
+{
+  "id": "wfrp4e-spell-importer",
+  "title": "WFRP4e Spell Importer",
+  "description": "Bulk-import WFRP4e spell JSON files (standard system export format) into a dedicated compendium pack. Supports multi-file picker, folder scan, and pasted JSON arrays. Imported spells are fully functional and can be dragged onto any character sheet.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "wfrp4e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "8.0.0"
+        }
+      }
+    ]
+  },
+  "authors": [
+    {
+      "name": "Jeramie Brown",
+      "url": "https://github.com/TheWingedLancer"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/spell-importer.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "imported-spells",
+      "label": "Imported Spells",
+      "path": "packs/imported-spells",
+      "type": "Item",
+      "system": "wfrp4e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "url": "https://github.com/TheWingedLancer/WFRP4e-Spell-Importer",
+  "manifest": "https://github.com/TheWingedLancer/WFRP4e-Spell-Importer/releases/latest/download/module.json",
+  "download": "https://github.com/TheWingedLancer/WFRP4e-Spell-Importer/releases/latest/download/module.zip",
+  "readme": "https://github.com/TheWingedLancer/WFRP4e-Spell-Importer/blob/main/README.md",
+  "license": "MIT",
+  "flags": {}
+}

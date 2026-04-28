@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Dart",
+    "type": "spell",
+    "img": "icons/magic/symbols/runes-star-orange.webp",
+    "system": {
+      "description": { "value": "<p>You point a finger and a sliver of magical force darts at your target.</p>" },
+      "lore": { "value": "petty" },
+      "cn": { "value": 0 },
+      "range": { "value": "WPB yards" },
+      "target": { "value": "1" },
+      "duration": { "value": "Instant" },
+      "damage": { "value": "+2" },
+      "magicMissile": { "value": true }
+    },
+    "effects": []
+  },
+  {
+    "name": "Glowing Light",
+    "type": "spell",
+    "img": "icons/magic/light/orb-lightbulb-blue.webp",
+    "system": {
+      "description": { "value": "<p>You conjure a small mote of soft light that hovers near you.</p>" },
+      "lore": { "value": "petty" },
+      "cn": { "value": 1 },
+      "range": { "value": "You" },
+      "target": { "value": "You" },
+      "duration": { "value": "Willpower Bonus minutes" },
+      "damage": { "value": "" },
+      "magicMissile": { "value": false }
+    },
+    "effects": []
+  },
+  {
+    "name": "Fireball",
+    "type": "spell",
+    "img": "icons/magic/fire/explosion-fireball-medium-orange.webp",
+    "system": {
+      "description": { "value": "<p>A roaring sphere of flame erupts at the target location.</p>" },
+      "lore": { "value": "fire" },
+      "cn": { "value": 8 },
+      "range": { "value": "Willpower yards" },
+      "target": { "value": "AoE (Willpower Bonus yards)" },
+      "duration": { "value": "Instant" },
+      "damage": { "value": "+8" },
+      "magicMissile": { "value": false }
+    },
+    "effects": []
+  }
+]
