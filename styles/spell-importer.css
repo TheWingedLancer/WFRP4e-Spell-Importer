@@ -1,260 +1,360 @@
-/* ----------------------------------------------------------------- */
-/*  WFRP4e Spell Importer — minimal styles                           */
-/*                                                                   */
-/*  We let Foundry V13 + the WFRP4e system style buttons, inputs,    */
-/*  selects, and the form chrome. This file only handles layout and  */
-/*  the few elements Foundry doesn't already cover (tabs, the        */
-/*  preview table, duplicate badges).                                */
-/* ----------------------------------------------------------------- */
+/* ==========================================================================
+   WFRP4e Spell Importer – Stylesheet
 
-.wfrp4e-spell-importer .spell-importer-body {
+   Inherits the WFRP4e system theme through the window classes set on the
+   ApplicationV2: sheet, warhammer, wfrp4e, classic-font.
+
+   APPROACH (mirrors wfrp4e-trapping-builder):
+   - All selectors scoped under .spell-importer-app to avoid conflicts
+   - Buttons intentionally do NOT define custom colors — they inherit the
+     default WFRP4e button styling from the system theme
+   - The only custom colors are for:
+     - Section icons (gold #b8860b)
+     - Card / row left-border accents (gold #b8860b)
+     - Badges (dark brown #4a3c28, blue #3a5a88, dark red #8b1a1a)
+   - .window-content overflow set to auto for scrolling
+
+   SECTIONS:
+   1. Sidebar inject button (.spell-importer-btn)
+   2. Application layout (.spell-importer-body)
+   3. Tabs
+   4. Input panels (file picker, folder, paste)
+   5. Buttons (minimal – inherits WFRP4e defaults)
+   6. Preview section (card, table)
+   7. Duplicate badges and skipped block
+   8. Commit row (duplicate strategy + import)
+   ========================================================================== */
+
+/* ----- Inject button in Compendium sidebar directory ----- */
+.spell-importer-btn,
+button.wfrp4e-spell-importer-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: var(--font-size-12, 12px);
+  line-height: normal;
+  white-space: nowrap;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.spell-importer-btn i,
+button.wfrp4e-spell-importer-open i {
+  font-size: var(--font-size-11, 11px);
+  color: #b8860b;
+}
+
+/* ----- Application layout ----- */
+
+.spell-importer-app .window-content {
+  overflow-y: auto;
+}
+
+.spell-importer-app .spell-importer-body {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  height: 100%;
+  gap: 12px;
+  padding: 10px;
 }
 
-/* ---- Tabs ------------------------------------------------------- */
-
-.wfrp4e-spell-importer .spell-importer-tabs {
+/* ----- Tabs ----- */
+.spell-importer-app .si-tabs {
   display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--color-border-light-2, #7a7971);
-  margin-bottom: 0.25rem;
+  gap: 4px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 4px;
 }
 
-.wfrp4e-spell-importer .tab-btn {
+.spell-importer-app .si-tab {
   flex: 1;
-  padding: 0.5rem 0.75rem;
+  padding: 8px 12px;
   background: transparent;
   border: none;
   border-bottom: 2px solid transparent;
-  color: inherit;
+  margin-bottom: -2px;
   cursor: pointer;
   font-family: inherit;
-  font-size: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: inherit;
   border-radius: 0;
   box-shadow: none;
-  transition: border-color 0.12s ease, text-shadow 0.12s ease;
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.wfrp4e-spell-importer .tab-btn:hover {
-  text-shadow: 0 0 6px var(--color-shadow-primary, rgba(255, 100, 0, 0.5));
+.spell-importer-app .si-tab:hover {
+  color: #8b1a1a;
 }
 
-.wfrp4e-spell-importer .tab-btn.active {
-  border-bottom-color: var(--color-warm-2, #c9593f);
-  font-weight: 600;
+.spell-importer-app .si-tab.is-active {
+  border-bottom-color: #b8860b;
+  color: inherit;
 }
 
-/* ---- Input panels ----------------------------------------------- */
+.spell-importer-app .si-tab i {
+  margin-right: 4px;
+  color: #b8860b;
+}
 
-.wfrp4e-spell-importer .panel {
+/* ----- Input panels ----- */
+.spell-importer-app .si-panel {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
-.wfrp4e-spell-importer .panel-label {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+.spell-importer-app .si-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 12px;
 }
 
-.wfrp4e-spell-importer .hint {
-  font-size: 0.85em;
-  opacity: 0.75;
+.spell-importer-app .si-label i {
+  margin-right: 4px;
+  color: #b8860b;
+}
+
+.spell-importer-app .si-hint {
+  font-size: 12px;
   margin: 0;
+  opacity: 0.75;
   font-style: italic;
 }
 
-.wfrp4e-spell-importer .folder-row {
+.spell-importer-app .si-text-input,
+.spell-importer-app .si-file-input,
+.spell-importer-app .si-textarea,
+.spell-importer-app .si-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.spell-importer-app .si-textarea {
+  min-height: 140px;
+  line-height: 1.4;
+  resize: vertical;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+}
+
+.spell-importer-app .si-folder-row {
   display: flex;
-  gap: 0.5rem;
+  gap: 6px;
   align-items: stretch;
 }
 
-.wfrp4e-spell-importer .folder-row input[type="text"] {
+.spell-importer-app .si-folder-row .si-text-input {
   flex: 1;
 }
 
-.wfrp4e-spell-importer .folder-row button {
-  flex: 0 0 auto;
-  width: auto;
-}
-
-.wfrp4e-spell-importer textarea {
-  width: 100%;
-  resize: vertical;
-  min-height: 10em;
-  font-family: var(--font-mono, "Consolas", "Source Code Pro", monospace);
-  font-size: 0.9em;
-}
-
-.wfrp4e-spell-importer .panel-actions {
+.spell-importer-app .si-controls {
   display: flex;
+  gap: 8px;
+  margin-top: 4px;
   justify-content: flex-end;
 }
 
-.wfrp4e-spell-importer .panel-actions button {
-  flex: 0 0 auto;
-  width: auto;
-}
-
-/* ---- Preview ---------------------------------------------------- */
-
-.wfrp4e-spell-importer .spell-importer-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-  min-height: 0;
-  border-top: 1px solid var(--color-border-light-2, #7a7971);
-  padding-top: 0.5rem;
-}
-
-.wfrp4e-spell-importer .preview-header {
-  display: flex;
-  justify-content: space-between;
+/* ----- Buttons (inherit WFRP4e theme) ----- */
+.spell-importer-app .si-btn {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.wfrp4e-spell-importer .preview-header h3 {
-  margin: 0;
-  font-size: 1.05em;
-  border: none;
+.spell-importer-app .si-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.wfrp4e-spell-importer .clear-btn {
+.spell-importer-app .si-btn-action {
   flex: 0 0 auto;
-  width: auto;
-  padding: 0.25rem 0.6rem;
-  font-size: 0.85em;
 }
 
-.wfrp4e-spell-importer .preview-table-wrap {
+/* ----- Section title ----- */
+.spell-importer-app .si-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 13px;
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.spell-importer-app .si-section-title i {
+  color: #b8860b;
+}
+
+.spell-importer-app .si-btn-clear {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 1;
+  color: inherit;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.spell-importer-app .si-btn-clear:hover {
+  opacity: 1;
+  color: #8b1a1a;
+}
+
+/* ----- Preview card ----- */
+.spell-importer-app .si-preview-card {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.spell-importer-app .si-table-wrap {
   overflow: auto;
   max-height: 280px;
-  border: 1px solid var(--color-border-light-2, #7a7971);
   border-radius: 3px;
-  background: rgba(0, 0, 0, 0.1);
 }
 
-.wfrp4e-spell-importer .preview-table {
+.spell-importer-app .si-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.88em;
+  font-size: 12px;
 }
 
-.wfrp4e-spell-importer .preview-table th,
-.wfrp4e-spell-importer .preview-table td {
-  padding: 0.35rem 0.5rem;
+.spell-importer-app .si-table th,
+.spell-importer-app .si-table td {
+  padding: 6px 8px;
   text-align: left;
-  border-bottom: 1px solid rgba(122, 121, 113, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   vertical-align: middle;
 }
 
-.wfrp4e-spell-importer .preview-table thead th {
+.spell-importer-app .si-table thead th {
   position: sticky;
   top: 0;
-  background: rgba(0, 0, 0, 0.4);
-  font-weight: 600;
-  border-bottom: 1px solid var(--color-border-light-2, #7a7971);
+  background: rgba(74, 60, 40, 0.9);
+  color: #f5f0e1;
+  font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.85em;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.6px;
+  font-size: 11px;
+  border-bottom: 2px solid #4a3c28;
 }
 
-.wfrp4e-spell-importer .preview-table tbody tr:hover {
-  background: rgba(201, 89, 63, 0.12);
+.spell-importer-app .si-table tbody tr:hover {
+  background: rgba(184, 134, 11, 0.1);
 }
 
-.wfrp4e-spell-importer .preview-table tr.is-duplicate {
-  background: rgba(201, 89, 63, 0.1);
+.spell-importer-app .si-table tr.si-row-duplicate {
+  background: rgba(184, 134, 11, 0.08);
+  border-left: 3px solid #b8860b;
 }
 
-.wfrp4e-spell-importer .name-cell {
+.spell-importer-app .si-name-cell {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
-.wfrp4e-spell-importer .spell-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-2, #7a7971);
+.spell-importer-app .si-spell-icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.5);
   flex: 0 0 auto;
-  background: rgba(0, 0, 0, 0.25);
 }
 
-.wfrp4e-spell-importer .badge {
+/* ----- Badges (mirrors trapping-builder's tb-badge palette) ----- */
+.spell-importer-app .si-badge {
   display: inline-block;
-  padding: 0.1em 0.6em;
-  border-radius: 999px;
-  font-size: 0.75em;
-  font-weight: 600;
-  background: rgba(201, 89, 63, 0.25);
-  border: 1px solid var(--color-warm-2, #c9593f);
+  padding: 2px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-radius: 2px;
+  background: #4a3c28;
+  color: #f5f0e1;
 }
 
-/* ---- Skipped block ---------------------------------------------- */
+.spell-importer-app .si-badge-dup {
+  background: #8b1a1a;
+}
 
-.wfrp4e-spell-importer .skipped-block {
-  font-size: 0.85em;
-  background: rgba(0, 0, 0, 0.15);
-  padding: 0.4rem 0.6rem;
+/* ----- Skipped block ----- */
+.spell-importer-app .si-skipped {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(200, 50, 50, 0.08);
+  border: 1px solid rgba(200, 50, 50, 0.25);
+  border-left: 3px solid #8b1a1a;
   border-radius: 3px;
-  border: 1px solid var(--color-border-light-2, #7a7971);
+  font-size: 12px;
 }
 
-.wfrp4e-spell-importer .skipped-block summary {
+.spell-importer-app .si-skipped summary {
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.wfrp4e-spell-importer .skipped-block ul {
-  margin: 0.4rem 0 0;
-  padding-left: 1.2rem;
+.spell-importer-app .si-skipped summary i {
+  color: #8b1a1a;
+  margin-right: 4px;
 }
 
-/* ---- Commit row ------------------------------------------------- */
+.spell-importer-app .si-skipped ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+  line-height: 1.5;
+}
 
-.wfrp4e-spell-importer .commit-row {
+/* ----- Commit row ----- */
+.spell-importer-app .si-commit {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.spell-importer-app .si-commit-row {
   display: flex;
+  gap: 8px;
   align-items: center;
-  gap: 0.75rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--color-border-light-2, #7a7971);
 }
 
-.wfrp4e-spell-importer .commit-row label {
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.wfrp4e-spell-importer .commit-row select {
+.spell-importer-app .si-commit-row .si-select {
   flex: 0 1 auto;
-  width: auto;
   min-width: 14em;
+  width: auto;
 }
 
-.wfrp4e-spell-importer .commit-actions {
+.spell-importer-app .si-actions {
   margin-left: auto;
   display: flex;
-  gap: 0.5rem;
-}
-
-.wfrp4e-spell-importer .commit-actions button {
-  flex: 0 0 auto;
-  width: auto;
-}
-
-/* ---- Compendium directory header button ------------------------ */
-/* Make the injected sidebar button match Foundry's other directory  */
-/* header buttons (Create Compendium / Create Folder) by inheriting  */
-/* their styling. We just enforce full width.                        */
-
-button.wfrp4e-spell-importer-open {
-  width: 100%;
-  margin-top: 0.4rem;
+  gap: 6px;
 }

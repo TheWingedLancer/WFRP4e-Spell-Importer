@@ -30,11 +30,11 @@ export class SpellImporterApp extends HandlebarsApplicationMixin(ApplicationV2) 
 
   static DEFAULT_OPTIONS = {
     id: "wfrp4e-spell-importer",
+    classes: ["sheet", "warhammer", "wfrp4e", "classic-font", "spell-importer-app"],
     tag: "form",
     window: {
       title: "SPELL_IMPORTER.Title",
       icon: "fas fa-file-import",
-      contentClasses: ["wfrp4e-spell-importer"],
       resizable: true
     },
     position: {
