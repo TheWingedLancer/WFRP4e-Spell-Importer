@@ -25,7 +25,9 @@ Hooks.once("init", () => {
 /**
  * Inject an "Import Spells" button into the Compendium directory sidebar.
  * In V13 the sidebar tab fires `renderCompendiumDirectory` for the
- * ApplicationV2-based directory; we add a button to its header actions.
+ * ApplicationV2-based directory; we add a button to its header actions
+ * and copy class names from the native "Create Compendium" / "Create Folder"
+ * buttons so our button matches the dark-red leather styling automatically.
  */
 Hooks.on("renderCompendiumDirectory", (app, html) => {
   if (!game.user.isGM) return;
@@ -41,9 +43,23 @@ Hooks.on("renderCompendiumDirectory", (app, html) => {
   const header = root.querySelector(".directory-header") ?? root.querySelector("header");
   if (!header) return;
 
+  // Find an existing native button to copy styling from. Foundry's V13
+  // sidebar uses buttons with data-action attributes like "createEntry"
+  // and "createFolder" — any button in the header works as a template.
+  const templateBtn = header.querySelector("button[data-action]")
+    ?? root.querySelector(".directory-header button")
+    ?? root.querySelector("button.create-folder, button.create-entry");
+
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = `${MODULE_ID}-open`;
+
+  // Copy classes from the native button so we inherit its theme.
+  if (templateBtn) {
+    btn.className = templateBtn.className;
+  }
+  // Add our marker class last so re-render detection works.
+  btn.classList.add(`${MODULE_ID}-open`);
+
   btn.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("SPELL_IMPORTER.OpenButton")}`;
   btn.addEventListener("click", (ev) => {
     ev.preventDefault();
