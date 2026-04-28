@@ -1,4 +1,4 @@
-<div class="spell-importer-body">
+<div class="spell-importer-body standard-form">
 
   {{!-- Tabs --}}
   <nav class="spell-importer-tabs" aria-label="Import source">
@@ -19,9 +19,13 @@
 
     {{#if (eq activeTab "files")}}
       <div class="panel">
-        <label class="panel-label" for="spell-importer-files">{{localize "SPELL_IMPORTER.Files.Pick"}}</label>
-        <input id="spell-importer-files" type="file" name="files" accept="application/json,.json" multiple>
-        <p class="hint">{{localize "SPELL_IMPORTER.Files.PickHint"}}</p>
+        <div class="form-group">
+          <label for="spell-importer-files">{{localize "SPELL_IMPORTER.Files.Pick"}}</label>
+          <div class="form-fields">
+            <input id="spell-importer-files" type="file" name="files" accept="application/json,.json" multiple>
+          </div>
+          <p class="hint">{{localize "SPELL_IMPORTER.Files.PickHint"}}</p>
+        </div>
         <div class="panel-actions">
           <button type="button" data-action="parseFiles">
             <i class="fas fa-cogs"></i> {{localize "SPELL_IMPORTER.Buttons.Parse"}}
@@ -32,14 +36,16 @@
 
     {{#if (eq activeTab "folder")}}
       <div class="panel">
-        <label class="panel-label" for="spell-importer-folder">{{localize "SPELL_IMPORTER.Folder.Path"}}</label>
-        <div class="folder-row">
-          <input id="spell-importer-folder" type="text" name="folderPath" placeholder="modules/my-spells/data">
-          <button type="button" data-action="browseFolder">
-            <i class="fas fa-folder-open"></i> {{localize "SPELL_IMPORTER.Folder.Browse"}}
-          </button>
+        <div class="form-group">
+          <label for="spell-importer-folder">{{localize "SPELL_IMPORTER.Folder.Path"}}</label>
+          <div class="form-fields folder-row">
+            <input id="spell-importer-folder" type="text" name="folderPath" placeholder="modules/my-spells/data">
+            <button type="button" data-action="browseFolder">
+              <i class="fas fa-folder-open"></i> {{localize "SPELL_IMPORTER.Folder.Browse"}}
+            </button>
+          </div>
+          <p class="hint">{{localize "SPELL_IMPORTER.Folder.PathHint"}}</p>
         </div>
-        <p class="hint">{{localize "SPELL_IMPORTER.Folder.PathHint"}}</p>
         <div class="panel-actions">
           <button type="button" data-action="scanFolder">
             <i class="fas fa-search"></i> {{localize "SPELL_IMPORTER.Folder.Scan"}}
@@ -50,12 +56,16 @@
 
     {{#if (eq activeTab "paste")}}
       <div class="panel">
-        <label class="panel-label" for="spell-importer-paste">{{localize "SPELL_IMPORTER.Paste.Hint"}}</label>
-        <textarea id="spell-importer-paste"
-                  name="pasted"
-                  rows="10"
-                  spellcheck="false"
-                  placeholder='{{localize "SPELL_IMPORTER.Paste.Placeholder"}}'></textarea>
+        <div class="form-group stacked">
+          <label for="spell-importer-paste">{{localize "SPELL_IMPORTER.Paste.Hint"}}</label>
+          <div class="form-fields">
+            <textarea id="spell-importer-paste"
+                      name="pasted"
+                      rows="10"
+                      spellcheck="false"
+                      placeholder='{{localize "SPELL_IMPORTER.Paste.Placeholder"}}'></textarea>
+          </div>
+        </div>
         <div class="panel-actions">
           <button type="button" data-action="parsePaste">
             <i class="fas fa-cogs"></i> {{localize "SPELL_IMPORTER.Buttons.Parse"}}
@@ -142,7 +152,7 @@
             <button type="button" data-action="cancel">
               {{localize "SPELL_IMPORTER.Buttons.Cancel"}}
             </button>
-            <button type="submit" class="primary">
+            <button type="submit">
               <i class="fas fa-file-import"></i> {{localize "SPELL_IMPORTER.Buttons.Import"}}
             </button>
           </div>
