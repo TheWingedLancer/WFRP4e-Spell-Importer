@@ -24,49 +24,43 @@ Hooks.once("init", () => {
 
 /**
  * Inject an "Import Spells" button into the Compendium directory sidebar.
- * In V13 the sidebar tab fires `renderCompendiumDirectory` for the
- * ApplicationV2-based directory; we add a button to its header actions
- * and copy class names from the native "Create Compendium" / "Create Folder"
- * buttons so our button matches the dark-red leather styling automatically.
+ *
+ * V13's compendium directory header has this structure:
+ *   <header class="directory-header">
+ *     <div class="header-actions">    ← native buttons live here
+ *       <button class="create-entry">...</button>
+ *       <button class="create-folder">...</button>
+ *       <button class="open-compendium-browser">...</button>
+ *     </div>
+ *     <search>...</search>
+ *   </header>
+ *
+ * To get matching styling, we must (a) inject INTO .header-actions, not
+ * after it, and (b) match the native HTML structure: <i> + <span>text</span>.
  */
 Hooks.on("renderCompendiumDirectory", (app, html) => {
   if (!game.user.isGM) return;
 
-  // `html` may be a jQuery object or a raw HTMLElement depending on Foundry
-  // version — normalise to an HTMLElement.
   const root = html instanceof HTMLElement ? html : html?.[0];
   if (!root) return;
 
   // Avoid double-injection on re-render.
   if (root.querySelector(`.${MODULE_ID}-open`)) return;
 
-  const header = root.querySelector(".directory-header") ?? root.querySelector("header");
-  if (!header) return;
-
-  // Find an existing native button to copy styling from. Foundry's V13
-  // sidebar uses buttons with data-action attributes like "createEntry"
-  // and "createFolder" — any button in the header works as a template.
-  const templateBtn = header.querySelector("button[data-action]")
-    ?? root.querySelector(".directory-header button")
-    ?? root.querySelector("button.create-folder, button.create-entry");
+  const headerActions = root.querySelector(".directory-header .header-actions")
+    ?? root.querySelector(".header-actions");
+  if (!headerActions) return;
 
   const btn = document.createElement("button");
   btn.type = "button";
-
-  // Copy classes from the native button so we inherit its theme.
-  if (templateBtn) {
-    btn.className = templateBtn.className;
-  }
-  // Add our marker class last so re-render detection works.
-  btn.classList.add(`${MODULE_ID}-open`);
-
-  btn.innerHTML = `<i class="fas fa-file-import"></i> ${game.i18n.localize("SPELL_IMPORTER.OpenButton")}`;
+  btn.className = `create-entry ${MODULE_ID}-open`;
+  btn.innerHTML = `<i class="fa-solid fa-file-import" inert></i><span>${game.i18n.localize("SPELL_IMPORTER.OpenButton")}</span>`;
   btn.addEventListener("click", (ev) => {
     ev.preventDefault();
     new SpellImporterApp().render(true);
   });
 
-  header.appendChild(btn);
+  headerActions.appendChild(btn);
 });
 
 /**
